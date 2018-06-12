@@ -10,5 +10,6 @@ public class StatemachineApplication {
 	}
 	
 }
-//todo 1. 将statemachine存入redis、数据库  2. 增加action 执行业务逻辑，更新数据库、guard 判断是否执行状态迁移  3. 通过消息队列触发event
+//todo  1. 将 state存入数据库  2. 增加action 执行业务逻辑，更新数据库、guard 判断是否执行状态迁移  
+//TODO  3. 通过消息队列触发event 4.1个orderid对应一个statemachine
 

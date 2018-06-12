@@ -79,6 +79,7 @@ public class Persist {
 			if (message != null && message.getHeaders().containsKey("order")) {
 				Integer order = message.getHeaders().get("order", Integer.class);
 				jdbcTemplate.update("update orders set state = ? where id = ?", state.getId().toString(), order);
+				System.out.println("update db orderid：" + order + ":" + state);
 			}
 		}
 	}

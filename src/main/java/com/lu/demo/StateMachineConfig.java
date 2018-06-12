@@ -2,6 +2,8 @@ package com.lu.demo;
 
 import java.util.EnumSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,7 @@ import org.springframework.statemachine.guard.Guard;
 @EnableStateMachine
 public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States, Events> {
     
+	private static Logger logger = LoggerFactory.getLogger(StateMachineConfig.class);
 	
     @Override
     public void configure(StateMachineStateConfigurer<States, Events> states) throws Exception {
@@ -50,7 +53,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
 
             @Override
             public boolean evaluate(StateContext<States, Events> context) {
-            	System.out.println("guard " + context.getMessageHeader("customer") + ":" + context.getMessageHeader("order"));
+            	logger.info("guard orderid:" + context.getMessageHeader("order"));
                 return true;
             }
         };
@@ -63,7 +66,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
 			@Override
 			public void execute(StateContext<States, Events> context) {
 				String value = (String) context.getExtendedState().getVariables().get("variables");
-				System.out.println("action " + context.getMessageHeader("customer") + ":" + context.getMessageHeader("order") + " ,variables=" + value);
+				logger.info("action orderid:" + context.getMessageHeader("order") + " ,variables=" + value);
 				
 				if (value == null) {
 					context.getExtendedState().getVariables().put("variables", "value1");
@@ -83,7 +86,7 @@ public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<States
             public void execute(StateContext<States, Events> context) {
                 // RuntimeException("MyError") added to context
                 Exception exception = context.getException();
-                System.out.println("action " + context.getMessageHeader("customer") + ":" + context.getMessageHeader("order") + " error:"
+                logger.info("action orderid:" + context.getMessageHeader("order") + " error:"
                 		+ exception.getMessage());
             }
         };

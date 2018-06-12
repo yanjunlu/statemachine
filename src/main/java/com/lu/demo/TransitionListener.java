@@ -55,6 +55,6 @@ public class TransitionListener {
 	@OnEventNotAccepted
     public void anyEventNotAccepted(StateContext<States, Events> stateContext) {
 		
-		logger.info("event not accepted: " + stateContext.getEvent());
+		logger.info("事件未被认可。event not accepted: " + stateContext.getEvent());
     }
 }
