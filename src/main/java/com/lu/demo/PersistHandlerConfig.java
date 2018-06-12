@@ -4,11 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.config.StateMachineFactory;
 
 @Configuration
 public class PersistHandlerConfig {
 	@Autowired
-	private StateMachine<States, Events> stateMachine;
+	private StateMachineFactory<States, Events> stateMachineFactory;
 
 	@Bean
 	public Persist persist() {
@@ -17,6 +18,6 @@ public class PersistHandlerConfig {
 
 	@Bean
 	public PersistStateMachineHandler persistStateMachineHandler() {
-		return new PersistStateMachineHandler(stateMachine);
+		return new PersistStateMachineHandler(stateMachineFactory.getStateMachine());
 	}
 }
